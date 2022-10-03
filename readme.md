@@ -122,6 +122,8 @@ module.exports = {
 
 ## 四、开发
 
+搭建一个高效的开发环境
+
 **source map**
 
 追踪错误来源，如果不设置source map，出错代码只能追踪到bundle.js文件中，但是bundle.js可能是由多个js源文件组成的，不利于定位出错代码位置。使用source map可以将出错代码定位到源js文件。使用方法：
@@ -186,3 +188,35 @@ module.exports = {
 ```
 
 效果：运行`npm start`，自动打开浏览器页面，同时保持监听，修改文件后，**程序自动刷新页面同步修改后的变化**
+
+**web-dev-middleware**
+
+`webpack-dev-middleware` 是一个容器(wrapper)，它可以把 webpack 处理后的文件传递给一个服务器(server)，在《指南》的例子中还搭配了一个express服务器使用。
+
+在`webpack.config.js`输出配置中，增加了一个`publicPath: '/'`，确保服务器脚本能够正确获取到文件资源。然后添加了一个`server.js`，创建了一个express服务器
+
+```javascript
+const express = require('express');
+const webpack = require('webpack');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+
+const app = express();
+const config = require('./webpack.config.js');
+const compiler = webpack(config);
+
+// Tell express to use the webpack-dev-middleware and use the webpack.config.js
+// configuration file as a base.
+app.use(webpackDevMiddleware(compiler, {
+  publicPath: config.output.publicPath
+}));
+
+// Serve the files on port 3000.
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!\n');
+});
+```
+
+最后运行`node server.js`
+
+效果：建立起了一个web服务器，但是**需要手动输入网址打开浏览器网页**，修改文件后，**需要手动刷新才能同步变化**
+
