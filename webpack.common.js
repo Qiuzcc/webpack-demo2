@@ -9,16 +9,16 @@ module.exports = {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist')
     },
-    plugins:[
+    plugins: [
         new HtmlWebpackPlugin({
-            title: '管理输出'        //指定生成的index.html的标题
+            title: 'code split'        //指定生成的index.html的标题
         }),
     ],
-    module:{
-        rules:[
+    module: {
+        rules: [
             {
-                test:/\.css$/,
-                use:['style-loader','css-loader']
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
             }
         ]
     }

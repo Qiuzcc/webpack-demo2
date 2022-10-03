@@ -12,6 +12,8 @@
 - 管理资源
 - 管理输出
 - 开发
+- 搭建生产环境
+- 代码分离
 
 
 
@@ -225,3 +227,41 @@ app.listen(3000, function () {
 ## 五、搭建生产环境
 
 参照《指南》，仅仅是根据不同开发模式拆分了webpack配置文件，其余的代码压缩、css分离都因为依赖项与webpack最新版本不兼容而无法实现。
+
+
+
+## 六、代码分离
+
+常用的代码分离方法：
+
+- 入口起点，使用[`entry`](https://www.webpackjs.com/configuration/entry-context) 配置手动地分离代码，一个入口对应一个bundle.js文件。缺点：不灵活，不能实现动态拆分，不同入口之间还可能包含重复模块，重复打包。
+- 防止重复，使用 [`CommonsChunkPlugin`](https://www.webpackjs.com/plugins/commons-chunk-plugin) 去重和分离 chunk，提取公用依赖，生成单独的bundle
+- 动态导入，通过模块的内联函数调用来分离代码，类似于vue路由懒加载的原理
+
+指南中第二点提到的[`CommonsChunkPlugin`](https://www.webpackjs.com/plugins/commons-chunk-plugin) 插件已经被弃用了，所以按照教程第二点操作会出错，参考：[请看CommonsChunkPlugin VS SplitChunksPlugin-CSDN博客](https://blog.csdn.net/yusirxiaer/article/details/82917144)。[`CommonsChunkPlugin`](https://www.webpackjs.com/plugins/commons-chunk-plugin) 插件的弊端在于只能将公用模块统一抽取到父模块中，极易造成父模块过大。
+
+**SplitChunksPlugin插件**的好处在于：1、可以抽离出懒加载模块之间的公用模块，2、不会抽取到父级而是形成一个单独的模块，与首次用到的懒加载模块并行加载，解决了入口文件过大的问题。
+
+但是具体怎么使用SplitChunksPlugin插件没有提到，所以这一节没有再尝试
+
+指南第三点动态导入，导入后的loadsh是一个Module类型，但是无法获取到它的join方法，所以也就无法调用实现预定效果，页面为空白；然而在浏览器控制台又能获取到它的join方法，这是很奇怪的一点，它的表现并不像正常的Promise对象。最后无法实现出指南预期的结果。解决：
+
+```javascript
+//index.js
+function getComponent() {
+
+  return import(/* webpackChunkName: "lodash" */ 'lodash').then(_ => {
+    var element = document.createElement('div')
+    element.innerHTML = _.default.join(['Hello', 'webpack'], ' ')
+    // 注意当调用 ES6 模块的 import() 方法（引入模块）时，必须指向模块的 .default 值，
+    // 因为它才是 promise 被处理后返回的实际的 module 对象。
+
+    return element
+
+  }).catch(error => 'An error occurred while loading the component')
+}
+getComponent().then(component => {
+  document.body.appendChild(component)
+})
+```
+
