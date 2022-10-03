@@ -1,0 +1,11 @@
+{
+  "name": "webpack-demo2",
+  "version": "1.0.0",
+  "description": "《webpack5.74.0》指南实践代码2.0，在上一个版本的基础上优化分支管理，每个章节对应一个branch，因为每个章节所用到的项目代码都不太相同，所以可以根据章节选择对应的分支查看代码",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "timegogo",
+  "license": "ISC"
+}
