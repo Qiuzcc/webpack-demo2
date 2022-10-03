@@ -1,3 +1,5 @@
 .hello {
-    color: red;
-  }
+  color: red;
+  /* background: url(./favicon.ico); */
+}
+/* 实际上，这里的background并没有发挥出作用，把img去掉只剩下background时，页面没有出现图片 */

@@ -1,6 +1,7 @@
 const path = require('path')
 
 module.exports = {
+    mode:'production',
     entry:'./src/index.js',
     output:{
         filename:'bundle.js',
@@ -14,6 +15,9 @@ module.exports = {
                     'style-loader',
                     'css-loader'
                 ]
+            },{
+                test:/\.(png|jpg|svg|gif|ico)$/,
+                use:['file-loader']
             }
         ]
     }

@@ -77,3 +77,7 @@ module.exports = {
 }
 ```
 
+此时css被内嵌到html的`<head>`标签内，是作为内联css
+
+
+
