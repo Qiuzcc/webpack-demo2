@@ -92,3 +92,24 @@ json数据是NodeJS内置了加载实现，但是csv、xml、tsv的导入需要�
 
 ## 管理输出
 
+在上面的操作中，我们是靠手动在生成的index.html中引入所有资源，当应用程序增长之后，这样的操作将变得不现实，所以我们需要使用插件去自动完成这件事情。
+
+HtmlWebpackPlugin插件可以帮助我们在每次构建时，创建一个新的文件，并把所有的bundle自动添加进去。
+
+**使用插件**
+
+首先安装插件，然后再webpack.config.js文件中进行配置
+
+```javascript
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+module.exports = {
+    ...
+    plugins:[
+        new HtmlWebpackPlugin({
+            title:'管理输出'        //指定生成的index.html的标题
+        })
+    ]
+}
+```
+
