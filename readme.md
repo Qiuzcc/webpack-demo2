@@ -2,7 +2,14 @@
 
 ## 指南链接
 
-[指南 | webpack 中文网 (webpackjs.com)](
+[指南 | webpack 中文网 (webpackjs.com)](https://www.webpackjs.com/guides/)
+
+
+
+## 目录
+
+- 起步
+- 管理资源
 
 
 
@@ -43,3 +50,30 @@ module.exports = {
 **NPM脚本**
 
 使用 npm 的 `scripts`，我们可以像使用 `npx` 那样通过模块名引用本地安装的 npm 包。这是大多数基于 npm 的项目遵循的标准，因为它允许所有贡献者使用同一组通用脚本
+
+
+
+## 管理资源
+
+**加载css**
+
+使用loader加载器，先安装，然后再`webpack.config.js`中配置`module`属性
+
+```javascript
+//webpack.config.js，module->rules是loader加载器的配置
+module.exports = {
+	...
+    module:{
+        rules:[
+            {
+                test:/\.css$/,
+                use:[
+                    'style-loader',
+                    'css-loader'
+                ]
+            }
+        ]
+    }
+}
+```
+
