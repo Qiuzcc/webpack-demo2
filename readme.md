@@ -222,49 +222,6 @@ app.listen(3000, function () {
 
 
 
-## 五、模块热替换
+## 五、搭建生产环境
 
-模块热替换就是在运行时更新各种模块，而不用完全刷新全部模块。
-
-**启用热更新**
-
-更新[webpack-dev-server](https://github.com/webpack/webpack-dev-server) 的配置，以及使用 webpack 内置的 HMR 插件
-
-```javascript
-//webpack.config.js
-const webpack = require('webpack')
-module.exports = {
-    ...
-    plugins: [
-        new webpack.HotModuleReplacementPlugin()
-    ],
-    devServer:{
-        ...
-        hot:true
-    }
-}
-```
-
-在`index.js`文件中也要相应改变
-
-```javascript
-//index.js
-...
-// document.body.appendChild(component())
-let element = component()
-document.body.appendChild(element)
-
-if (module.hot) {
-  module.hot.accept('./print.js', function () {
-    console.log('Accepting the updated printMe module!');
-    printMe();
-    document.body.removeChild(element)	//原来视图中的事件仍绑定在旧事件中，所以需要重新建立新的视图
-    element = component()
-    document.body.appendChild(element)
-  })
-}
-```
-
-**css热更新**
-
-style-loader和css-loader汇总已经内置了热更新功能，loader在后台使用`module.hot.accept` 来修补(patch) `<style>` 标签，所以只需要使用对应的loader就可以了。
+参照《指南》，仅仅是根据不同开发模式拆分了webpack配置文件，其余的代码压缩、css分离都因为依赖项与webpack最新版本不兼容而无法实现。
