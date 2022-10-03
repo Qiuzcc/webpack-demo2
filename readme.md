@@ -127,9 +127,62 @@ module.exports = {
 追踪错误来源，如果不设置source map，出错代码只能追踪到bundle.js文件中，但是bundle.js可能是由多个js源文件组成的，不利于定位出错代码位置。使用source map可以将出错代码定位到源js文件。使用方法：
 
 ```javascript
+//webpack.config.js
 module.exports = {
     ...
     devtool:'inline-source-map'
 }
 ```
 
+**开发工具**
+
+在开发环境下，如果我们每次修改都需要 `npm run build` 将显得很麻烦，所以webpack提供了几种不同的做法，可以在代码变化后自动编译代码
+
+- 使用观察模式
+- 使用webpack-dev-server
+- 使用webpack-dev-middleware
+
+下面依次展开每种的用法和对应的效果
+
+**观察模式**
+
+本质是在webpack构建时，加入`--watch`选项
+
+```json
+//package.json
+{
+    "scripts":{
+        "watch":"webpack --watch"
+    }
+}
+```
+
+运行`npm run watch`，命令行不会退出，因为还在观察代码变化。当修改文件后，**需要手动刷新页面，才能看到变化**
+
+**web-dev-server**
+
+是一个一个简单的 web 服务器，并且能够实时重新加载(live reloading)，需要先安装依赖
+
+```javascript
+//webpack.config.js
+module.exports = {
+    ...
+    devServer:{
+        static:{
+            directory: path.resolve(__dirname,'dist')   //设置web服务器寻找文件的地址
+        },
+        port:8080   //服务器端口，不能省略，否则无法正常运行
+    }
+}
+```
+
+```json
+//package.json
+{
+    "scripts":{
+        "start":"webpack-dev-server --open"
+    }
+}
+```
+
+效果：运行`npm start`，自动打开浏览器页面，同时保持监听，修改文件后，**程序自动刷新页面同步修改后的变化**
