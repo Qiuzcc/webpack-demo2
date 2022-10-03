@@ -11,10 +11,11 @@
 - 起步
 - 管理资源
 - 管理输出
+- 开发
 
 
 
-## 起步
+## 一、起步
 
 安装webpack和webpack-cli，`npm init`初始化项目，去除`package.json`的`main`入口，防止意外发布你的代码。创建项目目录
 
@@ -54,7 +55,7 @@ module.exports = {
 
 
 
-## 管理资源
+## 二、管理资源
 
 **加载css**
 
@@ -90,7 +91,7 @@ json数据是NodeJS内置了加载实现，但是csv、xml、tsv的导入需要�
 
 
 
-## 管理输出
+## 三、管理输出
 
 在上面的操作中，我们是靠手动在生成的index.html中引入所有资源，当应用程序增长之后，这样的操作将变得不现实，所以我们需要使用插件去自动完成这件事情。
 
@@ -116,3 +117,19 @@ module.exports = {
 **自动清空/dist文件夹**
 
 使用[`clean-webpack-plugin`](https://www.npmjs.com/package/clean-webpack-plugin)插件，在每次构建前自动清空输出目录
+
+
+
+## 四、开发
+
+**source map**
+
+追踪错误来源，如果不设置source map，出错代码只能追踪到bundle.js文件中，但是bundle.js可能是由多个js源文件组成的，不利于定位出错代码位置。使用source map可以将出错代码定位到源js文件。使用方法：
+
+```javascript
+module.exports = {
+    ...
+    devtool:'inline-source-map'
+}
+```
+
