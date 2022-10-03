@@ -6,12 +6,12 @@ module.exports = {
         app: './src/index.js'
     },
     output: {
-        filename: '[name].bundle.js',
+        filename: '[name].[chunkhash].js',
         path: path.resolve(__dirname, 'dist')
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'code split'        //指定生成的index.html的标题
+            title: 'Caching'        //指定生成的index.html的标题
         }),
     ],
     module: {
