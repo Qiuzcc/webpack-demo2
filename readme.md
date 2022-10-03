@@ -10,6 +10,7 @@
 
 - 起步
 - 管理资源
+- 管理输出
 
 
 
@@ -86,3 +87,8 @@ module.exports = {
 **加载数据**
 
 json数据是NodeJS内置了加载实现，但是csv、xml、tsv的导入需要用加载器，如`csv-loader`、`xml-loader`
+
+
+
+## 管理输出
+
