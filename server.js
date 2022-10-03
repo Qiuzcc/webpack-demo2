@@ -9,7 +9,7 @@ const compiler = webpack(config);
 // Tell express to use the webpack-dev-middleware and use the webpack.config.js
 // configuration file as a base.
 app.use(webpackDevMiddleware(compiler, {
-  publicPath: config.output.publicPath
+  publicPath: config.output.publicPath    //结合着webpack.config.js里面output属性里的publicPath来设置
 }));
 
 // Serve the files on port 3000.
