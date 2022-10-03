@@ -79,5 +79,10 @@ module.exports = {
 
 此时css被内嵌到html的`<head>`标签内，是作为内联css
 
+**加载图片**
 
+使用`file-loader`处理图标、图片、字体等资源
 
+**加载数据**
+
+json数据是NodeJS内置了加载实现，但是csv、xml、tsv的导入需要用加载器，如`csv-loader`、`xml-loader`

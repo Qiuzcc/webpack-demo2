@@ -18,6 +18,12 @@ module.exports = {
             },{
                 test:/\.(png|jpg|svg|gif|ico)$/,
                 use:['file-loader']
+            },{
+                test:/\.(csv|tsv)$/,
+                use:['csv-loader']
+            },{
+                test:/\.xml$/,
+                use:['xml-loader']
             }
         ]
     }
